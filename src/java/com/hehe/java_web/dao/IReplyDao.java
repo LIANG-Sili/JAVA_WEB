@@ -13,7 +13,7 @@ public interface IReplyDao {
 
     Reply selectReplyByReplyid(int replyid);
 
-    Reply selectCount();
+    int selectCount();
 
     boolean insert(Reply reply);
 

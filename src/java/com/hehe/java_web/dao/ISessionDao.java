@@ -12,7 +12,9 @@ public interface ISessionDao {
 
     Session selectSessionBySessionid(int sessionid);
 
-    Session selectCount();
+    Session selectSessionBySessionname(String sessionname);
+
+    int selectCount();
 
     boolean insert(Session session);
 

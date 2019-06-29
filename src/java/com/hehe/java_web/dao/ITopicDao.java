@@ -12,7 +12,7 @@ public interface ITopicDao {
 
     Topic selectTopicByTopicid(int topicid);
 
-    Topic selectCount();
+    int selectCount();
 
     boolean insert(Topic topic);
 

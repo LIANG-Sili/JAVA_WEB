@@ -24,14 +24,21 @@
     </select>
 
     <!-- 根据版块id查询版块 -->
-    <select id="selectSessionBySessionid" resultMap="BaseResultMap" parameterType="int">
+    <select id="selectSessionBySessionid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT <include refid="Base_Column_List"/>
         FROM Session
         WHERE Sid = #{sessionid, jdbcType=INTEGER}
     </select>
 
+    <!-- 根据版块名字查询版块 -->
+    <select id="selectSessionBySessionname" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT <include refid="Base_Column_List"/>
+        FROM Session
+        WHERE Sname = #{sessionname, jdbcType=VARCHAR}
+    </select>
+
     <!-- 查询版块数量 -->
-    <select id="selectCount" resultType="int" >
+    <select id="selectCount" resultType="java.lang.Integer" >
     SELECT COUNT(*)
     FROM Session
   </select>
@@ -70,7 +77,7 @@
     </update>
 
     <!-- 删除版块 -->
-    <delete id="delete" parameterType="int">
+    <delete id="delete" parameterType="java.lang.Integer">
     DELETE FROM Session
     WHERE Sid = #{sessionid, jdbcType=INTEGER}
   </delete>

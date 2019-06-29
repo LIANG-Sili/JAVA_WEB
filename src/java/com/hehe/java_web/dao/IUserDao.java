@@ -12,6 +12,8 @@ public interface IUserDao {
 
     User selectUserByUserid(int userid);
 
+    User selectUserByUsername(String username);
+
     int selectCount();
 
     boolean insert(User user);

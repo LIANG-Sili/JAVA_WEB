@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hehe.java_web.dao.IReplyDao">
+
+    <resultMap id="BaseResultMap" type="com.hehe.java_web.pojo.Reply">
+        <id column="Rid" property="Rid" jdbcType="INTEGER"/>
+        <result column="Rtid" property="Rtid" jdbcType="INTEGER"/>
+        <result column="Rsid" property="Rsid" jdbcType="INTEGER"/>
+        <result column="Ruid" property="Ruid" jdbcType="INTEGER"/>
+        <result column="Rcontent" property="Rcontent" jdbcType="LONGVARCHAR"/>
+        <result column="Rtime" property="Rtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    Rid, Rtid, Rsid, Ruid, Rcontent, Rtime
+    </sql>
+
+    <!-- 查询所有帖子 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM Reply
+        ORDER BY Rid
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 根据帖子id查询帖子 -->
+    <select id="selectReplyByReplyid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT <include refid="Base_Column_List"/>
+        FROM Reply
+        WHERE Rid = #{replyid, jdbcType=INTEGER}
+    </select>
+
+    <!-- 查询帖子数量 -->
+    <select id="selectCount" resultType="java.lang.Integer" >
+    SELECT COUNT(*)
+    FROM Reply
+  </select>
+
+    <!-- 插入帖子 -->
+    <insert id="insert" parameterType="com.hehe.java_web.pojo.Reply">
+        INSERT INTO Reply (<include refid="Base_Column_List"/>)
+        VALUES (#{Rid, jdbcType=INTEGER},#{Rtid, jdbcType=INTEGER},#{Rsid, jdbcType=INTEGER}, #{Ruid, jdbcType=INTEGER}
+        ,#{Rcontent, jdbcType=LONGVARCHAR}, #{Rtime, jdbcType=TIMESTAMP})
+    </insert>
+
+    <!-- 更新帖子 -->
+    <update id="update" parameterType="com.hehe.java_web.pojo.Reply">
+        UPDATE Reply
+        <set>
+            <if test="Rtid != null and Rtid != ''">
+                Rtid = #{Rtid, jdbcType=INTEGER},
+            </if>
+            <if test="Rsid != null and Rsid != ''">
+                Rsid = #{Rsid, jdbcType=INTEGER},
+            </if>
+            <if test="Ruid != null and Ruid != ''">
+                Ruid = #{Ruid, jdbcType=INTEGER},
+            </if>
+            <if test="Rcontent != null and Rcontent != ''">
+                Rcontent = #{Rcontent, jdbcType=LONGVARCHAR},
+            </if>
+            <if test="Rtime != null and Rtime != ''">
+                Rtime = #{Rtime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE Rid = #{Rid, jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除帖子 -->
+    <delete id="delete" parameterType="java.lang.Integer">
+    DELETE FROM Reply
+    WHERE Rid = #{replyid, jdbcType=INTEGER}
+  </delete>
+
+</mapper>
