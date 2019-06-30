@@ -21,4 +21,6 @@ public interface IUserDao {
     boolean update(User user);
 
     boolean delete(int userid);
+
+    int existUsername(String username);
 }

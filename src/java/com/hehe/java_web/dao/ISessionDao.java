@@ -21,4 +21,6 @@ public interface ISessionDao {
     boolean update(Session session);
 
     boolean delete(int sessionid);
+
+    int existSessionname(String sessionname);
 }

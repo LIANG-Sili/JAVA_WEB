@@ -4,7 +4,7 @@ import com.hehe.java_web.pojo.Topic;
 
 import java.util.List;
 
-public interface TopicService {
+public interface ITopicService {
 
     //获取全部帖子
     List<Topic> getAllTopics();

@@ -4,7 +4,7 @@ import com.hehe.java_web.pojo.Reply;
 
 import java.util.List;
 
-public interface ReplyService {
+public interface IReplyService {
 
     //获取一个帖子的所有跟帖
     List<Reply> getRepliesOfTopic(Integer topicId);

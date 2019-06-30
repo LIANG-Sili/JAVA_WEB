@@ -42,6 +42,11 @@
         WHERE Uid = #{userid, jdbcType=INTEGER}
     </select>
 
+    <!-- 查询是否存在这个用户  -->
+    <select id="existUsername" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT count(*) from User where Uname = #{username,jdbcType=VARCHAR}
+  </select>
+
     <!-- 查询用户数量 -->
     <select id="selectCount" resultType="java.lang.Integer" >
     SELECT COUNT(*)

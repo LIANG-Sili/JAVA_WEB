@@ -37,6 +37,11 @@
         WHERE Sname = #{sessionname, jdbcType=VARCHAR}
     </select>
 
+    <!-- 查询是否存在这个用户  -->
+    <select id="existSessionname" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT count(*) from Session where Sname = #{sessionname,jdbcType=VARCHAR}
+  </select>
+
     <!-- 查询版块数量 -->
     <select id="selectCount" resultType="java.lang.Integer" >
     SELECT COUNT(*)
