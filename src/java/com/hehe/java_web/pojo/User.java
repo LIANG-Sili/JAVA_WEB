@@ -1,114 +1,77 @@
 package com.hehe.java_web.pojo;
 
+import org.springframework.stereotype.Repository;
+
 import java.sql.Timestamp;
+import java.util.Date;
 
+@Repository(value = "user")
 public class User {
-    private int Uid;
-    private String Uname;
-    private String Upassword;
-    private String Uemail;
-    private String Ubirthday;
-    private int Usex;
-    private String Uhead;
-    private String Ustatement;
-    private Timestamp Uregdate;
-    private int Ustate;
-    private int Upoint;
-    private int Uisectioner;
+    private Integer UID;
+    private String UName;
+    private String UPassword;
+    private String URegDate;
+    private Integer UStatus;
 
-    public int getUid() {
-        return Uid;
+    public Integer getUID() {
+        return UID;
     }
 
-    public void setUid(int uid) {
-        Uid = uid;
+    public void setUID(Integer UID) {
+        this.UID = UID;
     }
 
-    public String getUname() {
-        return Uname;
+    public String getUName() {
+        return UName;
     }
 
-    public void setUname(String uname) {
-        Uname = uname;
+    public void setUName(String UName) {
+        this.UName = UName;
     }
 
-    public String getUpassword() {
-        return Upassword;
+    public String getUPassword() {
+        return UPassword;
     }
 
-    public void setUpassword(String upassword) {
-        Upassword = upassword;
+    public void setUPassword(String UPassword) {
+        this.UPassword = UPassword;
     }
 
-    public String getUemail() {
-        return Uemail;
+    public String getURegDate() {
+        return URegDate;
     }
 
-    public void setUemail(String uemail) {
-        Uemail = uemail;
+    public void setURegDate(String URegDate) {
+        this.URegDate = URegDate;
     }
 
-    public String getUbirthday() {
-        return Ubirthday;
+    public Integer getUStatus() {
+        return UStatus;
     }
 
-    public void setUbirthday(String ubirthday) {
-        Ubirthday = ubirthday;
+    public void setUStatus(Integer UStatus) {
+        this.UStatus = UStatus;
     }
 
-    public int getUsex() {
-        return Usex;
+    public User() {
+        super();
     }
 
-    public void setUsex(int usex) {
-        Usex = usex;
+    public User(String UName, String UPassword, String URegDate) {
+        this.UName = UName;
+        this.UPassword = UPassword;
+        this.URegDate = URegDate;
     }
 
-    public String getUhead() {
-        return Uhead;
+    @Override
+    public String toString() {
+        return "User{" +
+                "UID=" + UID +
+                ", UName='" + UName + '\'' +
+                ", UPassword='" + UPassword + '\'' +
+                ", URegDate='" + URegDate + '\'' +
+                ", UStatus=" + UStatus +
+                '}';
     }
 
-    public void setUhead(String uhead) {
-        Uhead = uhead;
-    }
-
-    public String getUstatement() {
-        return Ustatement;
-    }
-
-    public void setUstatement(String ustatement) {
-        Ustatement = ustatement;
-    }
-
-    public Timestamp getUregdate() {
-        return Uregdate;
-    }
-
-    public void setUregdate(Timestamp uregdate) {
-        Uregdate = uregdate;
-    }
-
-    public int getUstate() {
-        return Ustate;
-    }
-
-    public void setUstate(int ustate) {
-        Ustate = ustate;
-    }
-
-    public int getUpoint() {
-        return Upoint;
-    }
-
-    public void setUpoint(int upoint) {
-        Upoint = upoint;
-    }
-
-    public int getUisectioner() {
-        return Uisectioner;
-    }
-
-    public void setUisectioner(int uisectioner) {
-        Uisectioner = uisectioner;
-    }
 }

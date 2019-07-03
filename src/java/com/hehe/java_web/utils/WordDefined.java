@@ -1,4 +1,4 @@
-package com.amayadream.webchat.utils;
+package com.hehe.java_web.utils;
 
 /**
  * NAME   :  WebChat/com.amayadream.webchat.utils

@@ -1,13 +1,5 @@
-package com.withstars.util;
+package com.hehe.java_web.utils;
 
-/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: withstars
- * Date: 2018-02-15
- * Time: 10:57
- * Mail: withstars@126.com
- */
 public class HexConversion {
 
     /**

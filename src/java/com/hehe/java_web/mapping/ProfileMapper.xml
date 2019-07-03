@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hehe.java_web.dao.IProfileDao">
+
+    <resultMap id="BaseResultMap" type="com.hehe.java_web.pojo.Profile">
+        <id column="PUserName" property="PUserName" jdbcType="VARCHAR"/>
+        <result column="PHead" property="PHead" jdbcType="BLOB"/>
+        <result column="PGender" property="PGender" jdbcType="INTEGER"/>
+        <result column="PStatement" property="PStatement" jdbcType="VARCHAR"/>
+        <result column="PEmail" property="PEmail" jdbcType="VARCHAR"/>
+        <result column="PScore" property="PScore" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 根据ProfileID查询Profile -->
+    <select id="selectProfileByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT *
+        FROM Profile
+        WHERE PUserName = #{userName}
+    </select>
+
+    <!-- 插入Profile -->
+    <insert id="insertProfile" parameterType="com.hehe.java_web.pojo.Profile">
+    INSERT INTO Profile
+    VALUES (default ,#{PHead, jdbcType=BLOB}, #{PGender, jdbcType=INTEGER},
+    #{PStatement, jdbcType=VARCHAR},#{PEmail, jdbcType=VARCHAR}, default )
+  </insert>
+
+    <!-- 更新Profile -->
+    <update id="updateProfile" parameterType="com.hehe.java_web.pojo.Profile">
+        UPDATE Profile
+        <set>
+            <if test="PHead != null and PHead != ''">
+                PHead = #{PHead, jdbcType=BLOB},
+            </if>
+            <if test="PGender != null and PGender != ''">
+                PGender = #{PGender, jdbcType=INTEGER},
+            </if>
+            <if test="PStatement != null and PStatement != ''">
+                PStatement = #{PStatement, jdbcType=VARCHAR},
+            </if>
+            <if test="PEmail != null and PEmail != ''">
+                PEmail = #{PEmail, jdbcType=VARCHAR},
+            </if>
+            <if test="PScore != null and PScore != ''">
+                PScore = #{PScore, jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE PUserName = #{PUserName, jdbcType=VARCHAR}
+    </update>
+
+
+
+    <!-- 删除Profile -->
+    <delete id="deleteProfile" parameterType="com.hehe.java_web.pojo.Profile">
+    DELETE FROM Profile
+    WHERE PUserName = #{PUserName, jdbcType=VARCHAR}
+  </delete>
+
+</mapper>

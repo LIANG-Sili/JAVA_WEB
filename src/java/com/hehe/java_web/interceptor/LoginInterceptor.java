@@ -1,4 +1,4 @@
-package com.amayadream.webchat.interceptor;
+package com.hehe.java_web.interceptor;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -8,12 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-/**
- * NAME   :  EmailSystem/com.amayadream.interceptor
- * Author :  Amayadream
- * Date   :  2015.10.06 17:33
- * TODO   :
- */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     private List<String> IGNORE_URI;
@@ -23,7 +17,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         //获取URI后缀
         String requestUri = request.getServletPath();
 
-        if(requestUri.equalsIgnoreCase("/"))    return true;
+        if(requestUri.equalsIgnoreCase("/"))
+            return true;
 
         //过滤不需要拦截的地址
         for (String uri : IGNORE_URI) {

@@ -1,13 +1,8 @@
-package com.amayadream.webchat.utils;
+package com.hehe.java_web.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * NAME   :  LeaveSystem/com.amayadream.leave.util
- * Author :  Amayadream
- * Date   :  2015.12.29 16:22
- * TODO   :  网络工具类
- */
+
 public class NetUtil {
 
     /**

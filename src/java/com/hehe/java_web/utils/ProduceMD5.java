@@ -1,15 +1,7 @@
-package com.withstars.util;
+package com.hehe.java_web.utils;
 
 import java.security.MessageDigest;
 
-/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: withstars
- * Date: 2018-02-15
- * Time: 10:56
- * Mail: withstars@126.com
- */
 public class ProduceMD5 {
 
     /**

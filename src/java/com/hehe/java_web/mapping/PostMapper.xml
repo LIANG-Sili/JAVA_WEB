@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hehe.java_web.dao.IPostDao">
+
+    <resultMap id="BaseResultMap" type="com.hehe.java_web.pojo.Post">
+        <id column="PID" property="PID" jdbcType="INTEGER"/>
+        <result column="PBelongPostID" property="PBelongPostID" jdbcType="INTEGER"/>
+        <result column="PContents" property="PContents" jdbcType="LONGVARCHAR"/>
+        <result column="PTimes" property="PTimes" jdbcType="VARCHAR"/>
+        <result column="PFlag" property="PFlag" jdbcType="INTEGER"/>
+        <result column="PType" property="PType" jdbcType="INTEGER"/>
+        <result column="PBelongUserID" property="PBelongUserID" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--获取所有贴子-->
+    <select id="selectPostAll" resultMap="BaseResultMap">
+      SELECT * FROM Post
+      ORDER BY PID
+      LIMIT #{offset}, #{limit}
+  </select>
+
+    <!--获取他所依赖的贴子-->
+    <select id="selectBelongPost" resultType="com.hehe.java_web.pojo.Post">
+      SELECT * FROM Post
+      WHERE PID = #{PBelongPostID,jdbcType = INTEGER}
+  </select>
+
+    <!--获取一个用户发起的所有贴子-->
+    <select id="selectUserPostAll" resultMap="BaseResultMap">
+      SELECT * FROM Post
+      where PBelongUserID = #{user.UID,jdbcType = INTEGER}
+      ORDER BY PID
+      LIMIT #{offset}, #{limit}
+  </select>
+
+
+    <!--获取这个贴子的所有子贴-->
+    <select id="selectBelongedPostAll" resultMap="BaseResultMap">
+      SELECT * FROM Post
+      where PBelongPostID = #{post.PID,jdbcType = INTEGER}
+      ORDER BY PID
+      LIMIT #{offset}, #{limit}
+  </select>
+
+    <!--插入一个贴子-->
+    <insert id="insertPost" parameterType="com.hehe.java_web.pojo.Post">
+    INSERT INTO Post
+    VALUES (default ,#{PBelongPostID, jdbcType=INTEGER}, #{PContents, jdbcType=LONGVARCHAR},
+    #{PTimes, jdbcType=VARCHAR},default ,#{PType, jdbcType=INTEGER},
+    #{PBelongUserID,jdbcType=INTEGER})
+  </insert>
+
+    <!--更新一个贴子-->
+    <update id="updatePost" parameterType="com.hehe.java_web.pojo.Post">
+        UPDATE Post
+        <set>
+            <if test="PTimes != null and PTimes != ''">
+                PTimes = #{PTimes, jdbcType=VARCHAR},
+            </if>
+            <if test="PContents != null and PContents != ''">
+                PContents = #{PContents, jdbcType=LONGVARCHAR},
+            </if>
+            <if test="PFlag != null">
+                PFlag = #{PFlag, jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE PID = #{PID, jdbcType=INTEGER}
+    </update>
+
+
+    <!--删除一个贴子-->
+    <delete id="deletePost" parameterType="com.hehe.java_web.pojo.Post">
+    DELETE FROM Post
+    WHERE PID = #{PID, jdbcType=INTEGER}
+  </delete>
+
+    <!--增加贴子的标签-->
+    <insert id="insertPostBelongLabel">
+    INSERT INTO PostBelongLabel
+    VALUES (#{label.LID, jdbcType=INTEGER},#{post.PID, jdbcType=INTEGER})
+  </insert>
+
+    <!--删除贴子的标签-->
+    <delete id="deletePostBelongLabel">
+    delete from PostBelongLabel
+    where (#{post.PID, jdbcType=INTEGER},#{label.LID, jdbcType=INTEGER})
+  </delete>
+
+    <!--查询用户关注的贴子-->
+    <select id="selectUserCollectPostAll" resultMap="BaseResultMap">
+        select *
+        from Post
+        where PID in
+        (select PID
+            from UserCollectionPost
+            where UID = #{user.UID,jdbcType = INTEGER})
+        order by PID
+        LIMIT #{offset}, #{limit}
+    </select>
+
+<!--    获取贴子总数-->
+    <select id="selectPostCount" resultType="java.lang.Integer">
+        select count(*)
+        from Post
+    </select>
+
+<!--    通过PID获取Post-->
+    <select id="selectPostByPID" resultMap="BaseResultMap">
+        select *
+        from Post
+        where PID = #{PostID}
+    </select>
+
+    <!-- 获取标签的所有贴子-->
+    <select id="selectPostBelongLabelAll" resultMap="BaseResultMap">
+      SELECT * FROM Post
+      where PID in (
+      SELECT PID
+      FROM PostBelongLabel
+      where LID = #{label.LID})
+      ORDER BY PID
+      LIMIT #{offset}, #{limit}
+    </select>
+
+</mapper>

@@ -3,109 +3,155 @@
 <mapper namespace="com.hehe.java_web.dao.IUserDao">
 
     <resultMap id="BaseResultMap" type="com.hehe.java_web.pojo.User">
-        <id column="Uid" property="Uid" jdbcType="INTEGER"/>
-        <result column="Uname" property="Uname" jdbcType="VARCHAR"/>
-        <result column="Upassword" property="Upassword" jdbcType="VARCHAR"/>
-        <result column="Uemail" property="Uemail" jdbcType="VARCHAR"/>
-        <result column="Ubirthday" property="Ubirthday" jdbcType="VARCHAR"/>
-        <result column="Usex" property="Usex" jdbcType="INTEGER"/>
-        <result column="Uhead" property="Uhead" jdbcType="VARCHAR"/>
-        <result column="Ustatement" property="Ustatement" jdbcType="VARCHAR"/>
-        <result column="Uregdate" property="Uregdate" jdbcType="TIMESTAMP"/>
-        <result column="Ustate" property="Ustate" jdbcType="INTEGER"/>
-        <result column="Upoint" property="Upoint" jdbcType="INTEGER"/>
-        <result column="Uissectioner" property="Uissectioner" jdbcType="INTEGER"/>
+        <id column="UID" property="UID" jdbcType="INTEGER"/>
+        <result column="UName" property="UName" jdbcType="VARCHAR"/>
+        <result column="UPassword" property="UPassword" jdbcType="VARCHAR"/>
+        <result column="URegDate" property="URegDate" jdbcType="VARCHAR"/>
+        <result column="UStatus" property="UStatus" jdbcType="INTEGER"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-    Uid, Uname,Upassword, Uemail, Uemail,Usex, Uhead, Ustatement, Uregdate, Ustate, Upoint, Uissectioner
-  </sql>
-
-    <!-- 查询所有用户 -->
-    <select id="selectAll" resultMap="BaseResultMap">
-      SELECT <include refid="Base_Column_List"/> FROM User
-      ORDER BY Uid
+    <!-- 查询所有用户可分页 -->
+    <select id="selectUserAll" resultMap="BaseResultMap">
+      SELECT * FROM User
+      ORDER BY UID
       LIMIT #{offset}, #{limit}
   </select>
 
-    <!-- 根据用户id查询用户 -->
-    <select id="selectUserByUserid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        SELECT <include refid="Base_Column_List"/>
+    <!--查询关注用户可分页-->
+    <select id="selectUserCollectAll" resultMap="BaseResultMap">
+        SELECT *
         FROM User
-        WHERE Uname = #{username, jdbcType=VARCHAR}
+        WHERE UID in
+        (select UID2
+            from UserCollectionUser
+            where UID1 = #{user.UID,jdbcType = INTEGER})
+        order by UID
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!--查询被关注用户可分页-->
+    <select id="selectUserCollectedAll" resultMap="BaseResultMap">
+        SELECT *
+        FROM User
+        WHERE UID in
+        (select UID1
+            from UserCollectionUser
+            where UID2 = #{user.UID,jdbcType = INTEGER})
+        order by UID
+        LIMIT #{offset}, #{limit}
     </select>
 
     <!-- 根据用户名字查询用户 -->
-    <select id="selectUserByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
-        SELECT <include refid="Base_Column_List"/>
+    <select id="selectUserByUsername" resultMap="BaseResultMap">
+        SELECT *
         FROM User
-        WHERE Uid = #{userid, jdbcType=INTEGER}
+        WHERE UName = #{username}
     </select>
 
-    <!-- 查询是否存在这个用户  -->
-    <select id="existUsername" parameterType="java.lang.String" resultType="java.lang.Integer">
-    SELECT count(*) from User where Uname = #{username,jdbcType=VARCHAR}
-  </select>
-
     <!-- 查询用户数量 -->
-    <select id="selectCount" resultType="java.lang.Integer" >
+    <select id="selectUserCount" resultType="java.lang.Integer" >
     SELECT COUNT(*)
     FROM User
   </select>
 
+    <!-- 查询关注用户数量 -->
+    <select id="selectUserCollectCount" parameterType="com.hehe.java_web.pojo.User" resultType="java.lang.Integer" >
+    SELECT COUNT(*)
+    FROM UserCollectionUser
+    where UID1 = #{UID,jdbcType = INTEGER}
+  </select>
+
+    <!-- 查询被关注用户数量 -->
+    <select id="selectUserCollectedCount" parameterType="com.hehe.java_web.pojo.User" resultType="java.lang.Integer" >
+    SELECT COUNT(*)
+    FROM UserCollectionUser
+    where UID2 = #{UID,jdbcType = INTEGER}
+  </select>
+
     <!-- 插入用户 -->
-    <insert id="insert" parameterType="com.hehe.java_web.pojo.User">
-    INSERT INTO User (<include refid="Base_Column_List"/>)
-    VALUES (#{Uid, jdbcType=INTEGER},#{Uname, jdbcType=VARCHAR}, #{Upassword, jdbcType=VARCHAR}, #{Uemail, jdbcType=VARCHAR}, #{Ubirthday, jdbcType=VARCHAR},#{Usex, jdbcType=INTEGER},
-    #{Uhead, jdbcType=VARCHAR}, #{Ustatement, jdbcType=VARCHAR}, #{Uregdate, jdbcType=TIMESTAMP},
-    #{Ustate, jdbcType=INTEGER}, #{Upoint, jdbcType=INTEGER},#{Uissectioner, jdbcType=INTEGER})
+    <insert id="insertUser" parameterType="com.hehe.java_web.pojo.User">
+    INSERT INTO User
+    VALUES (default ,#{UName, jdbcType=VARCHAR}, #{UPassword, jdbcType=VARCHAR},
+    #{URegDate, jdbcType=VARCHAR},#{UStatus, jdbcType=INTEGER})
   </insert>
 
     <!-- 更新用户 -->
-    <update id="update" parameterType="com.hehe.java_web.pojo.User">
+    <update id="updateUser" parameterType="com.hehe.java_web.pojo.User">
         UPDATE User
         <set>
-            <if test="Uname != null and Uname != ''">
-                Uname = #{Uname, jdbcType=VARCHAR},
+            <if test="UPassword != null and UPassword != ''">
+                UPassword = #{UPassword, jdbcType=VARCHAR},
             </if>
-            <if test="Upassword != null and Upassword != ''">
-                Upassword = #{Upassword, jdbcType=VARCHAR},
-            </if>
-            <if test="Uemail != null and Uemail != ''">
-                Uemail = #{Uemail, jdbcType=VARCHAR},
-            </if>
-            <if test="Ubirthday != null and Ubirthday != ''">
-                Ubirthday = #{Ubirthday, jdbcType=VARCHAR},
-            </if>
-            <if test="Usex != null and Usex != ''">
-                Usex = #{Usex, jdbcType=INTEGER},
-            </if>
-            <if test="Uhead != null and Uhead != ''">
-                Uhead = #{Uhead, jdbcType=VARCHAR},
-            </if>
-            <if test="Ustatement != null and Ustatement != ''">
-                Ustatement = #{Ustatement, jdbcType=VARCHAR},
-            </if>
-            <if test="Uregdate != null and Uregdate != ''">
-            Uregdate = #{Uregdate, jdbcType=TIMESTAMP},
-            </if>
-            <if test="Ustate != null and Ustate != ''">
-                Ustate = #{Ustate, jdbcType=INTEGER},
-            </if>
-            <if test="Upoint != null and Upoint != ''">
-                Upoint = #{Upoint, jdbcType=INTEGER},
-            </if>
-            <if test="Uissectioner != null and Uissectioner != ''">
-                Uissectioner = #{Uissectioner, jdbcType=INTEGER},
+            <if test="UStatus != null">
+                UStatus = #{UStatus, jdbcType=INTEGER},
             </if>
         </set>
-        WHERE Uid = #{Uid, jdbcType=INTEGER}
+        WHERE UName = #{UName, jdbcType=VARCHAR}
     </update>
 
     <!-- 删除用户 -->
-    <delete id="delete" parameterType="java.lang.Integer">
+    <delete id="deleteUser" parameterType="com.hehe.java_web.pojo.User">
     DELETE FROM User
-    WHERE Uid = #{userid, jdbcType=INTEGER}
+    WHERE UName = #{UName, jdbcType=VARCHAR}
   </delete>
+
+    <!--用户取消关注某个用户-->
+    <delete id="deleteUserCollectUser">
+    DELETE FROM UserCollectionUser
+    WHERE UID1 = #{user1.UID, jdbcType=INTEGER} and UID2 = #{user2.UID,jdbcType=INTEGER}
+  </delete>
+
+    <!--用户取消关注某个标签-->
+    <delete id="deleteUserCollectLabel">
+    DELETE FROM UserCollectionLabel
+    WHERE UID = #{user.UID, jdbcType=INTEGER} and LID = #{label.LID,jdbcType=INTEGER}
+  </delete>
+
+    <!--用户取消关注某个贴子-->
+    <delete id="deleteUserCollectPost">
+    DELETE FROM UserCollectionPost
+    WHERE UID = #{user.UID, jdbcType=INTEGER} and PID = #{post.PID,jdbcType=INTEGER}
+  </delete>
+
+    <!--用户关注某个用户-->
+    <insert id="insertUserCollectUser">
+    INSERT INTO UserCollectionUser
+    VALUES (#{user1.UID, jdbcType=INTEGER},#{user2.UID, jdbcType=INTEGER})
+  </insert>
+
+    <!--用户关注某个标签-->
+    <insert id="insertUserCollectLabel">
+    INSERT INTO UserCollectionLabel
+    VALUES (#{user.UID, jdbcType=INTEGER},#{label.LID, jdbcType=INTEGER})
+  </insert>
+
+    <!--用户关注某个贴子-->
+    <insert id="insertUserCollectPost">
+    INSERT INTO UserCollectionPost
+    VALUES (#{user.UID, jdbcType=INTEGER},#{post.PID, jdbcType=INTEGER})
+  </insert>
+
+    <!--获取关注这个贴子的人-->
+    <select id="selectUserCollectPostAll" resultMap="BaseResultMap">
+      select *
+        from User
+        where UID in
+        (select UID
+            from UserCollectionPost
+            where PID = #{post.PID,jdbcType = INTEGER})
+        order by UID
+        LIMIT #{offset}, #{limit}
+  </select>
+
+    <!--获取关注标签的用户-->
+    <select id="selectUserCollectLabelAll" resultMap="BaseResultMap">
+      SELECT * FROM User
+      where UID in (
+      SELECT UID
+      FROM UserCollectionLabel
+      where LID = #{label.LID})
+      ORDER BY UID
+      LIMIT #{offset}, #{limit}
+    </select>
 
 </mapper>

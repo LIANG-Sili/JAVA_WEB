@@ -1,13 +1,9 @@
-package com.amayadream.webchat.utils;
+package com.hehe.java_web.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * @author :  Amayadream
- * @time :  2016.02.01 16:34
- */
 public class CommonDate {
 
     public final String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
@@ -53,12 +49,5 @@ public class CommonDate {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timeStamp * 1000));
     }
 
-    /**
-     * 计算年龄
-     * @param year 出生年份
-     * @return 年龄
-     */
-    public int getAge(int year){
-        return Integer.parseInt(this.year) - year;
-    }
+
 }
