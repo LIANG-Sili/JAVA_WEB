@@ -95,7 +95,6 @@
 				this.getAllPost();
 			},
 			addPost: function(e) {
-				console.log(this.$store.state.UserInfo.uname)
 				this.$axios.post(this.$store.state.portUrl + "post/addPost", {
 					PUserName: this.$store.state.UserInfo.uname,
 					PBelongPostID: 0,

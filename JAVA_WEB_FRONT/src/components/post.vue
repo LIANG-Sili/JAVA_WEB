@@ -25,8 +25,8 @@
   
   <div v-for="comment in comments" class="text item">
     <h1>{{comment.pcontents}}</h1>
-			{{getUser(comment.pbelongUserID)}}
-	回帖人 : {{username}}
+			<!-- {{getUser(comment.pbelongUserID)}} -->
+	回帖人ID : {{comment.pbelongUserID}}
 	回帖时间 : {{comment.ptimes}}
 	
   </div>
@@ -44,7 +44,6 @@
 				dialogVisible: false,
 				username:'',
 				pcontents:'',
-				canDel:false,
 				visible:false,
 			}
 		},
@@ -52,10 +51,6 @@
 			this.$axios.post(this.$store.state.portUrl+"post/getPost",{PID:this.PID}).then(res=>{
 				if(res.data.code === 0)
 				{
-					this.$axios.post(this.$store.state.portUrl+"post/checkCanDel",{UName:this.$store.state.UserInfo.uname,PID:this.PID}).then(res=>{
-						this.canDel = res.data.code;
-					});
-					console.log(res.data.Post);
 					this.post = res.data.Post;
 					this.getComments(this.PID);
 				}

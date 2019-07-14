@@ -55,7 +55,6 @@ export default {
           	    UName: this.$store.state.UserInfo.uname,
           	  })
           	 .then(res => {
-          							console.log(res.data.Profile);
           	   this.myInfo = res.data.Profile;
           	 });
           	this.$message({
@@ -83,7 +82,6 @@ export default {
 						    UName: this.$store.state.UserInfo.uname,
 						  })
 						 .then(res => {
-												console.log(res.data.Profile);
 						   this.myInfo = res.data.Profile;
 						 });
 						this.$message({
@@ -129,7 +127,6 @@ export default {
 								     UName: this.$store.state.UserInfo.uname,
 								   })
 								  .then(res => {
-										console.log(res.data.Profile);
 								    this.myInfo = res.data.Profile;
 								  });
 							 this.$message({
@@ -170,7 +167,6 @@ export default {
 				     UName: this.$store.state.UserInfo.uname,
 				   })
 				  .then(res => {
-						console.log(res.data.Profile);
 				    this.myInfo = res.data.Profile;
 				  });
     });

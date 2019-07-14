@@ -6,7 +6,7 @@ Vue.use(Vuex)
 /** 状态定义 */
 export const state = {
 	portUrl : "http://47.102.220.25:8080/JAVA_WEB/",
-	// portUrl : "http://localhost:8080/JAVA_WEB_Web_exploded/",
+	// portUrl : "http://localhost:8080/hehe_Jweb_war_exploded/",
 	UserInfo:'',
 	hasUserInfo:false,
 	isLogin:false,
